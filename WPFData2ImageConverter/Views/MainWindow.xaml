@@ -1,0 +1,226 @@
+﻿<Window
+    x:Class="WPFPathDataViewer.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:WPFPathDataViewer.Model"
+    Title="WPF Data Viewer"
+    Width="1192"
+    Height="868.592"
+    AllowsTransparency="True"
+    Background="Transparent"
+    DataContext="{StaticResource MainViewModel}"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style
+            BasedOn="{StaticResource CustomButton}"
+            TargetType="Button">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}" />
+
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="8">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Offset="0" Color="#FF505050" />
+                <GradientStop Offset="1" Color="#FF505050" />
+                <GradientStop Offset="0.498" Color="#FF898989" />
+                <GradientStop Offset="0.757" Color="#FF222222" />
+                <GradientStop Offset="0.234" Color="#FF222222" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid Background="Transparent">
+
+            <DockPanel
+                Height="70"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                DockPanel.Dock="Top">
+                <TextBlock
+                    Margin="15,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    FontFamily="Montserrat"
+                    FontSize="26"
+                    Foreground="White"
+                    Text="WPF Data Viewer"
+                    TextAlignment="Center" />
+                <Viewbox
+                    Width="24"
+                    Height="24"
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
+                    Cursor="Hand"
+                    DockPanel.Dock="Right">
+                    <Path
+                        Cursor="Hand"
+                        Data="{StaticResource PowerIcon}"
+                        Fill="White">
+                        <Path.InputBindings>
+                            <MouseBinding
+                                Command="{Binding CloseApplication}"
+                                Gesture="LeftClick" />
+                        </Path.InputBindings>
+                    </Path>
+                </Viewbox>
+            </DockPanel>
+            <Grid
+                Margin="10,70,10,10"
+                Background="Transparent">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="4" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--  Row 0  -->
+                <Grid Grid.Row="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="4" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        Grid.Column="0"
+                        AcceptsReturn="True"
+                        AllowDrop="True"
+                        Background="#72FFFFFF"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="WrapWithOverflow">
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem
+                                    Command="SelectAll"
+                                    Header="SelectAll" />
+                                <Separator />
+                                <MenuItem
+                                    Command="Copy"
+                                    Header="Copy" />
+                                <Separator />
+                                <MenuItem
+                                    Command="Cut"
+                                    Header="Cut" />
+                                <Separator />
+                                <MenuItem
+                                    Command="Paste"
+                                    Header="Paste" />
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+
+
+                    <StackPanel
+                        Grid.Column="2"
+                        VerticalAlignment="Center">
+                        <Button
+                            Command="{Binding CopyText}"
+                            Content="Copy" />
+
+                        <Button
+                            Command="{Binding CopyTextAsGeometry}"
+                            Content="Copy As Geometry" />
+                        <Button
+                            Command="{Binding CutText}"
+                            Content="Cut" />
+                        <Button
+                            Command="{Binding CutTextAsGeometry}"
+                            Content="Cut As Geometry" />
+                        <Button
+                            Command="{Binding PasteText}"
+                            Content="Paste" />
+                        <Button
+                            Command="{Binding ClearText}"
+                            Content="Clear" />
+                        <Button
+                            Command="{Binding CloseApplication}"
+                            Content="Close" />
+                    </StackPanel>
+
+                </Grid>
+
+                <!--  Row 1  -->
+                <GridSplitter
+                    Grid.Row="1"
+                    Height="4"
+                    HorizontalAlignment="Stretch"
+                    Background="Gray"
+                    ResizeDirection="Rows" />
+
+                <!--  Row 2  -->
+                <Grid
+                    Grid.Row="2"
+                    Background="#72FFFFFF">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="4" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Viewbox Margin="5">
+                            <Path
+                                Data="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+                                Fill="{Binding SelectedColor.ColorBrush}"
+                                Stretch="Fill" />
+                        </Viewbox>
+                    </Grid>
+
+                    <GridSplitter
+                        Grid.Column="1"
+                        Width="4"
+                        VerticalAlignment="Stretch"
+                        Background="Gray"
+                        ResizeBehavior="PreviousAndNext"
+                        ResizeDirection="Columns" />
+                    <Grid Grid.Column="2">
+                        <ListBox
+                            Background="#20FFFFFF"
+                            FontFamily="{StaticResource Montserrat}"
+                            ItemsSource="{Binding Colors}"
+                            SelectedItem="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="model:ColorDetails">
+                                    <StackPanel
+                                        Margin="0,3,0,0"
+                                        Orientation="Horizontal">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Margin" Value="5,0,0,0" />
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <Rectangle
+                                            Width="30"
+                                            Fill="{Binding ColorBrush}" />
+                                        <TextBlock
+                                            Width="130"
+                                            Text="{Binding Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Border>
+
+</Window>

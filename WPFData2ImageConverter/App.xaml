@@ -1,0 +1,19 @@
+﻿<Application
+    x:Class="WPFPathDataViewer.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:WPFPathDataViewer.ViewModel"
+    StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Templates/ButtonStyle.xaml" />
+                <ResourceDictionary Source="Assets/Icons/Icons.Xaml" />
+                <ResourceDictionary Source="Assets/Fonts/Fonts.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <vm:MainViewModel x:Key="MainViewModel" />
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
